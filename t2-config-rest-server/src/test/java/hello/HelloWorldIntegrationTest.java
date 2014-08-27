@@ -49,10 +49,7 @@ public class HelloWorldIntegrationTest {
     @Test
     public void sayHello() throws Exception {
         logger.error("before");
-        this.mockMvc.perform(
-                get("/hello").param("name", "ray").contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)).andDo(print());
+        this.mockMvc.perform(get("/hello").param("name", "ray")).andDo(print());
         logger.error("after");
     }
-
 }

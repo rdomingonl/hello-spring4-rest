@@ -30,6 +30,11 @@ public class Application {
         return new CustomerChangeListener();
     }
 
+    @Bean
+    AccessFilter accessFilter() {
+        return new AccessFilter();
+    }
+
     // @Bean
     // DataSource dataSource() {
     // return new SimpleDriverDataSource() {

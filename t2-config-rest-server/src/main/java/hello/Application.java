@@ -1,10 +1,7 @@
 package hello;
 
-import hello.jpa.CustomerChangeListener;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -23,16 +20,6 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
 
-    }
-
-    @Bean
-    CustomerChangeListener customerChangeListener() {
-        return new CustomerChangeListener();
-    }
-
-    @Bean
-    AccessFilter accessFilter() {
-        return new AccessFilter();
     }
 
     // @Bean

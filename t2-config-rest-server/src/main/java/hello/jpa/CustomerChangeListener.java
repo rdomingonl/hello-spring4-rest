@@ -4,7 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.data.rest.core.event.AbstractRepositoryEventListener;
+import org.springframework.stereotype.Component;
 
+@Component
 @RepositoryEventHandler
 public class CustomerChangeListener extends AbstractRepositoryEventListener<Customer> {
 

@@ -20,40 +20,39 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class Application {
 
-	@Autowired
-	Greeting g;
+    @Autowired
+    Greeting g;
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
 
-	}
+    }
 
-	@Bean
-	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public Greeting getG() {
-		return new Greeting(1, "");
-	}
+    @Bean
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public Greeting getG() {
+        return new Greeting(1, "");
+    }
 
-	@Bean
-	DataSource dataSource() {
-		return new SimpleDriverDataSource() {
-			{
-				setDriverClass(org.h2.Driver.class);
-				setUsername("sa");
-				setUrl("jdbc:h2:mem");
-				setPassword("");
-			}
-		};
-	}
+    @Bean
+    DataSource dataSource() {
+        return new SimpleDriverDataSource() {
+            {
+                setDriverClass(org.h2.Driver.class);
+                setUsername("sa");
+                setUrl("jdbc:h2:mem");
+                setPassword("");
+            }
+        };
+    }
 
-	@Bean
-	JdbcTemplate jdbcTemplate(DataSource dataSource) {
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		System.out.println("Creating tables");
-		jdbcTemplate.execute("drop table PERSONS if exists");
-		jdbcTemplate.execute("create table PERSONS("
-				+ "ID serial, NAME varchar(5) NOT NULL)");
-		return jdbcTemplate;
-	}
+    @Bean
+    JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        System.out.println("Creating tables");
+        jdbcTemplate.execute("drop table PERSONS if exists");
+        jdbcTemplate.execute("create table PERSONS(" + "ID serial, NAME varchar(5) NOT NULL)");
+        return jdbcTemplate;
+    }
 
 }

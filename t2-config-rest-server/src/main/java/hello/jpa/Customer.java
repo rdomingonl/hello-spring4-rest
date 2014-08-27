@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -17,7 +18,18 @@ public class Customer {
     @Length(min = 3, max = 20)
     private String name;
 
+    @ManyToOne(optional = false)
+    private Organisation organisation;
+
     protected Customer() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Customer(String name) {
@@ -30,6 +42,14 @@ public class Customer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Organisation getOrganisation() {
+        return organisation;
+    }
+
+    public void setOrganisation(Organisation organisation) {
+        this.organisation = organisation;
     }
 
     @Override

@@ -51,4 +51,10 @@ public class HelloWorldControllerImpl implements HelloWorldController {
         logger.info("Composed greeting : " + sb.toString());
         return new Greeting(counter.incrementAndGet(), String.format(template, sb.toString()));
     }
+    
+    @Override
+    public Greeting addGreeting(Greeting greeting) {
+        greeting.setContent(greeting.getContent() + "!");
+        return greeting;
+    }
 }

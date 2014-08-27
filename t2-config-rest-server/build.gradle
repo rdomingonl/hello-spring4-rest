@@ -43,6 +43,8 @@ dependencies {
     compile("org.ajar:swagger-spring-mvc-ui:0.2") 
     compile("org.apache.tomcat.embed:tomcat-embed-jasper")
 //    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.apache.tomcat.embed:tomcat-embed-el")
+    compile("org.hibernate:hibernate-validator")
     testCompile("junit:junit")
 }
 

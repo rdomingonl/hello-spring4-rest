@@ -4,7 +4,6 @@ import hello.jpa.Customer;
 import hello.jpa.CustomerRepository;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ public class HelloWorldControllerImpl implements HelloWorldController {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see hello.iHelloWorldController#greeting(java.lang.String)
      */
     @Override
@@ -41,7 +40,7 @@ public class HelloWorldControllerImpl implements HelloWorldController {
         newCustomer = repository.save(newCustomer);
 
         logger.info("Find all customers");
-        List<Customer> customers = repository.findAll();
+        Iterable<Customer> customers = repository.findAll();
         StringBuffer sb = new StringBuffer();
         for (Customer c : customers) {
             if (sb.length() > 0) {

@@ -1,9 +1,11 @@
-<configuration debug="false" scan="false" scanPeriod="30 seconds">
+<configuration debug="false" scan="false" scanPeriod="5 seconds">
 
 	<!-- ############################################ -->
 	<!-- ## Properties ## -->
 	<!-- ############################################ -->
-	<property scope="context" name="pattern" value="mypattern %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+	<property scope="context" name="pattern" value="%-5level [%d{HH:mm:ss.SSS}] %-25C{0} - %msg%n" />
+	<!-- default -->
+	<!-- <property scope="context" name="pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" /> -->
 
 	<!-- ############################################ -->
 	<!-- ## Appenders ## -->

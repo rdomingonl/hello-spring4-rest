@@ -49,7 +49,6 @@ public class Application {
     @Bean
     JdbcTemplate jdbcTemplate(DataSource dataSource) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        System.out.println("Creating tables");
         jdbcTemplate.execute("drop table PERSONS if exists");
         jdbcTemplate.execute("create table PERSONS(" + "ID serial, NAME varchar(5) NOT NULL)");
         return jdbcTemplate;

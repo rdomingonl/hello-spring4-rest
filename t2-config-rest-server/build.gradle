@@ -39,6 +39,8 @@ dependencies {
     compile("org.springframework:spring-tx")
     compile("org.springframework:spring-jdbc")
     compile("com.h2database:h2")
+    compile("com.mangofactory:swagger-springmvc:0.8.8")
+    compile("org.ajar:swagger-spring-mvc-ui:0.2") 
     compile("org.apache.tomcat.embed:tomcat-embed-jasper")
     compile("org.springframework.boot:spring-boot-starter-security")
     

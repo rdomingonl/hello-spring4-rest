@@ -2,68 +2,48 @@ package hello;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { Application.class, WebSecurityConfig.class }, loader = AnnotationConfigContextLoader.class)
-@WebAppConfiguration
 @TransactionConfiguration
 public class HelloWorldIntegrationTest {
+    Logger logger = LoggerFactory.getLogger(HelloWorldIntegrationTest.class);
 
     MockMvc mockMvc;
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    private WebApplicationContext wac;
-
-    @InjectMocks
-    HelloWorldControllerImpl controller;
+    HelloWorldController controller;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-
-        this.mockMvc = webAppContextSetup(this.wac)
-                .defaultRequest(get("/").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON))
-                .alwaysExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)).build();
-
-        // this.mockMvc = standaloneSetup(controller).setMessageConverters(new MappingJackson2HttpMessageConverter())
-        // .build();
+        this.mockMvc = standaloneSetup(controller).setMessageConverters(new MappingJackson2HttpMessageConverter())
+                .build();
     }
 
     @Test
     public void sayHello() throws Exception {
+        logger.error("before");
         this.mockMvc.perform(
                 get("/hello").param("name", "ray").contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)).andDo(print());
-
-        // this.mockMvc.perform(
-        // get("/hello").param("name", "ray").contentType(MediaType.APPLICATION_JSON)
-        // .accept(MediaType.APPLICATION_JSON)).andDo(print());
+        logger.error("after");
     }
 
-    @Test
-    public void sayHello2() throws Exception {
-        this.mockMvc.perform(get("/hello2").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andDo(print());
-    }
 }

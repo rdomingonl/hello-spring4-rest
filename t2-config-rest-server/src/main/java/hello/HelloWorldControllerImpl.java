@@ -58,26 +58,4 @@ public class HelloWorldControllerImpl implements HelloWorldController {
         return new Greeting(counter.incrementAndGet(), String.format(template, sb.toString()));
     }
 
-    @Override
-    public Greeting greeting2() throws IOException {
-        // retrieve all names
-        List<String> query = jdbcTemplate.query("select NAME from PERSONS", new RowMapper<String>() {
-            @Override
-            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-                return rs.getString("NAME");
-            }
-        });
-        StringBuffer sb = new StringBuffer();
-        for (String item : query) {
-            if (sb.length() > 0) {
-                sb.append(" and ");
-            }
-            sb.append(item);
-        }
-
-        logger.error("sb:" + sb.toString());
-        return new Greeting(counter.incrementAndGet(), String.format(template, sb.toString()));
-    }
-
 }

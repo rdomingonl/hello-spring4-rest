@@ -1,6 +1,0 @@
-08-26 14:48:48 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLException: Value too long for column "NAME VARCHAR(5) NOT NULL": "'raymond' (7)"; SQL statement:
-insert into PERSONS(NAME) values (?) [22001-176]
-08-26 14:50:16 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLException: Value too long for column "NAME VARCHAR(5) NOT NULL": "'raymond' (7)"; SQL statement:
-insert into PERSONS(NAME) values (?) [22001-176]

@@ -1,16 +1,16 @@
 package hello;
 
+import hello.jpa.Customer;
+import hello.jpa.CustomerRepository;
+
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,41 +21,35 @@ public class HelloWorldControllerImpl implements HelloWorldController {
     private final AtomicLong counter = new AtomicLong();
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    ApplicationContext ctx;
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see hello.iHelloWorldController#greeting(java.lang.String)
      */
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Greeting greeting(String name) throws IOException {
-        // add name to database
 
-        jdbcTemplate.update("insert into PERSONS(NAME) values (?)", "ha");
-        jdbcTemplate.update("insert into PERSONS(NAME) values (?)", name);
+        CustomerRepository repository = ctx.getBean(CustomerRepository.class);
+        Customer newCustomer = new Customer(name);
 
-        // retrieve all names
-        List<String> query = jdbcTemplate.query("select NAME from PERSONS", new RowMapper<String>() {
-            @Override
-            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+        logger.info("Saving new customer:" + newCustomer);
+        newCustomer = repository.save(newCustomer);
 
-                return rs.getString("NAME");
-            }
-        });
+        logger.info("Find all customers");
+        List<Customer> customers = repository.findAll();
         StringBuffer sb = new StringBuffer();
-        for (String item : query) {
+        for (Customer c : customers) {
             if (sb.length() > 0) {
                 sb.append(" and ");
             }
-            sb.append(item);
+            sb.append(c.getName());
         }
-
-        logger.error("sb:" + sb.toString());
+        logger.info("Composed greeting : " + sb.toString());
         return new Greeting(counter.incrementAndGet(), String.format(template, sb.toString()));
     }
-
 }

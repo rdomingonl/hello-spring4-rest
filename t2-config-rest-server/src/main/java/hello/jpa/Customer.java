@@ -18,7 +18,7 @@ public class Customer {
     @Length(min = 3, max = 20)
     private String name;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Organisation organisation;
 
     protected Customer() {

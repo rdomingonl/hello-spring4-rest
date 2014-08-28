@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan
 @EnableJpaRepositories
 @EnableAutoConfiguration
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @Import(RepositoryRestMvcConfiguration.class)
 public class Application {
 

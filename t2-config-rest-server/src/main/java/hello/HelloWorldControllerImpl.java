@@ -26,7 +26,7 @@ public class HelloWorldControllerImpl implements HelloWorldController {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see hello.iHelloWorldController#greeting(java.lang.String)
      */
     @Override
@@ -34,8 +34,10 @@ public class HelloWorldControllerImpl implements HelloWorldController {
     public Greeting greeting(String name) throws IOException {
 
         CustomerRepository repository = ctx.getBean(CustomerRepository.class);
-        Customer newCustomer = new Customer(name);
+        // always add foo so we can check if tx rollback worked
+        repository.save(new Customer("foo"));
 
+        Customer newCustomer = new Customer(name);
         logger.info("Saving new customer:" + newCustomer);
         newCustomer = repository.save(newCustomer);
 
@@ -51,7 +53,7 @@ public class HelloWorldControllerImpl implements HelloWorldController {
         logger.info("Composed greeting : " + sb.toString());
         return new Greeting(counter.incrementAndGet(), String.format(template, sb.toString()));
     }
-    
+
     @Override
     public Greeting addGreeting(Greeting greeting) {
         greeting.setContent(greeting.getContent() + "!");
